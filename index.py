@@ -39,8 +39,10 @@ if type_subvention == "Établissement (SIRET)":
 
                     csv = convert_file_to_csv(df_siret)
 
-                    st.download_button(label="Download data as CSV",data=csv,file_name=f'subventions{siret}.csv',mime='text/csv')
+                    st.download_button(label="Download data as CSV",data=csv,file_name=f'subventions_{siret}.csv',mime='text/csv')
         
+
+
 if type_subvention == "Association (SIREN ou RNA)":
     siren_ou_rna = st.text_input("SIREN ou RNA", key="siren_ou_rna")
     sub_siren = st.button("Rechercher")
@@ -59,4 +61,4 @@ if type_subvention == "Association (SIREN ou RNA)":
 
                     csv = convert_file_to_csv(df_siren)
 
-                    st.download_button(label="Download data as CSV",data=csv,file_name=f'subventions{siren_ou_rna}.csv',mime='text/csv')
+                    st.download_button(label="Download data as CSV",data=csv,file_name=f'subventions_{siren_ou_rna}.csv',mime='text/csv')
