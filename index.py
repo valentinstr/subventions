@@ -12,6 +12,7 @@ def api_siren_ou_rna(siren_ou_rna):
     response = requests.get(url)
     return response.status_code, response.json()
 
+@st.cache
 def convert_file_to_csv(df):
     return df.to_csv(index=False, sep=";")
 
@@ -34,9 +35,9 @@ if type_subvention == "Établissement (SIRET)":
                 if df_siret.empty:
                     st.write("Aucune subvention trouvée.")
                 else :
-                    df = st.dataframe(df_siret)
+                    st.dataframe(df_siret)
 
-                    csv = convert_file_to_csv(df)
+                    csv = convert_file_to_csv(df_siret)
 
                     st.download_button(label="Download data as CSV",data=csv,file_name=f'subventions{siret}.csv',mime='text/csv')
         
@@ -54,8 +55,8 @@ if type_subvention == "Association (SIREN ou RNA)":
                 if df_siren.empty:
                     st.write("Aucune subvention trouvée.")
                 else :
-                    df = st.dataframe(df_siren)
+                    st.dataframe(df_siren)
 
-                    csv = convert_file_to_csv(df)
+                    csv = convert_file_to_csv(df_siren)
 
                     st.download_button(label="Download data as CSV",data=csv,file_name=f'subventions{siren_ou_rna}.csv',mime='text/csv')
