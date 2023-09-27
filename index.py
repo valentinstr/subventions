@@ -12,6 +12,9 @@ def api_siren_ou_rna(siren_ou_rna):
     response = requests.get(url)
     return response.status_code, response.json()
 
+def convert_file_to_csv(df):
+    return df.to_csv(index=False, sep=";")
+
 st.title("Subventions aux associations et structures")
 st.markdown('API des subventions mise en place par [beta.gouv](https://github.com/betagouv/api-subventions-asso).')
 
@@ -31,7 +34,11 @@ if type_subvention == "Établissement (SIRET)":
                 if df_siret.empty:
                     st.write("Aucune subvention trouvée.")
                 else :
-                    st.dataframe(df_siret)
+                    df = st.dataframe(df_siret)
+
+                    csv = convert_file_to_csv(df)
+
+                    st.download_button(label="Download data as CSV",data=csv,file_name=f'subventions{siret}.csv',mime='text/csv')
         
 if type_subvention == "Association (SIREN ou RNA)":
     siren_ou_rna = st.text_input("SIREN ou RNA", key="siren_ou_rna")
@@ -47,4 +54,8 @@ if type_subvention == "Association (SIREN ou RNA)":
                 if df_siren.empty:
                     st.write("Aucune subvention trouvée.")
                 else :
-                    st.dataframe(df_siren)
+                    df = st.dataframe(df_siren)
+
+                    csv = convert_file_to_csv(df)
+
+                    st.download_button(label="Download data as CSV",data=csv,file_name=f'subventions{siren_ou_rna}.csv',mime='text/csv')
